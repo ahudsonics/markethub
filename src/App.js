@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import './index.css';
+import ProductsList from './components/ProductsList';
+import Cart from './components/Cart';
 
-function App() {
+const App = () => {
+  const [products, setProducts] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    fetch('https://fakestoreapi.com/products')
+      .then((response) => response.json())
+      .then((data) => setProducts(data));
+  }, []);
+
+  const addToCart = (product) => {
+    setCartItems([...cartItems, product]);
+  };
+
+  const checkout = () => {
+    alert('Thank you for shopping with us!');
+    setCartItems([]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div>
+      <header>
+        <h1>Simple E-Commerce App</h1>
       </header>
+      <main>
+        <ProductsList products={products} addToCart={addToCart} />
+        <Cart cartItems={cartItems} checkout={checkout} />
+      </main>
     </div>
   );
-}
+};
 
 export default App;
