@@ -17,6 +17,11 @@ const App = () => {
     setCartItems([...cartItems, product]);
   };
 
+  const removeFromCart = (product) => {
+    const updatedCartItems = cartItems.filter((item) => item.id !== product.id);
+    setCartItems(updatedCartItems);
+  };
+
   const checkout = () => {
     alert('Thank you for shopping with us!');
     setCartItems([]);
@@ -28,7 +33,12 @@ const App = () => {
         <h1>Simple E-Commerce App</h1>
       </header>
       <main>
-        <ProductsList products={products} addToCart={addToCart} />
+        <ProductsList
+          products={products}
+          addToCart={addToCart}
+          removeFromCart={removeFromCart}
+          cartItems={cartItems}
+        />
         <Cart cartItems={cartItems} checkout={checkout} />
       </main>
     </div>
@@ -36,3 +46,4 @@ const App = () => {
 };
 
 export default App;
+
